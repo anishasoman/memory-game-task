@@ -1,16 +1,34 @@
-# React + Vite
+# Memory Match Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fun and interactive card-flipping memory game built with React, Material UI, and Framer Motion.
+Test your memory, match all pairs, and beat your best score!
 
-Currently, two official plugins are available:
+##Game Description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The Memory Match Game challenges your focus and recall ability.
+You flip two cards at a time to find matching pairs. Each move counts — so plan wisely!
 
-## React Compiler
+ Features:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+ Smooth card flip animations using Framer Motion
+ Responsive UI with Material UI components
+ Real-time move tracking and score comparison
+ Win message and performance feedback
+ Play again option with instant reset
+ Beautiful landing page with animated visuals
+## Screens
 
-## Expanding the ESLint configuration
+Landing Page:
+Welcomes players with animated title and “Play Game” button.
+Game Page:
+Displays card grid, move counter, and result messages.
+Win Screen:
+Shows congratulatory popup with performance comparison and replay button.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+How to Play
+
+1.Click Play Game on the landing screen.
+2.Flip two cards to reveal images.
+3.If they match — they stay flipped.
+4.Match all pairs to win the game!
+5.Try again and improve your best score
