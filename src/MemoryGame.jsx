@@ -169,14 +169,18 @@ useEffect(() => {
 
         <Stack direction="row" justifyContent="center" alignItems="center" spacing={2} mb={2}>
           <Typography variant="body1">Grid Size:</Typography>
-          <TextField
-            type="number"
-            size="small"
-            value={gridSize}
-            onChange={handleGridSizeChange}
-            // inputProps={{ min: 2, max: 6 }}
-            sx={{ width: "70px" }}
-          />
+         <TextField
+  select
+  value={gridSize}
+  onChange={handleGridSizeChange}
+  size="small"
+>
+  {[2,3,4,5,6].map(size => (
+    <MenuItem key={size} value={size}>
+      {size} × {size}
+    </MenuItem>
+  ))}
+</TextField>
         </Stack>
 
         <Typography variant="h6" color="#2196f3">
