@@ -18,7 +18,7 @@ const MemoryGame = () => {
   const [won, setWon] = useState(false);
   const [moves, setMoves] = useState(0);
   const [bestScore, setBestScore] = useState(null);
-
+  const [cardSize, setCardSize] = useState(100);
   const flipSound = useRef(null);
   const matchSound = useRef(null);
   const winSound = useRef(null);
@@ -123,8 +123,24 @@ const MemoryGame = () => {
         : ` You're matching your best score for ${gridSize}*${gridSize}!`
       : "";
   const navigate = useNavigate();
-  // Responsive card sizing based on height
-  const cardSize = Math.min(window.innerHeight / gridSize - 20, 120);
+ 
+
+useEffect(() => {
+  const updateCardSize = () => {
+    const size = Math.min(
+      window.innerHeight / gridSize - 20,
+      window.innerWidth / gridSize - 20,
+      120
+    );
+    setCardSize(size);
+  };
+
+  updateCardSize();
+  window.addEventListener("resize", updateCardSize);
+
+  return () => window.removeEventListener("resize", updateCardSize);
+}, [gridSize]);
+
 
   return (
     <Box
@@ -132,7 +148,8 @@ const MemoryGame = () => {
         background: "linear-gradient(135deg, #f1fd50ff 0%, #eaf02cff 100%)",
         minHeight: "100vh",
         display: "flex",
-        flexDirection: { xs: "column", md: "row" },
+        flexDirection: { xs: "column", sm: "column", md: "row" },
+
         alignItems: "center",
         justifyContent: "center",
         // p: 3,
@@ -141,9 +158,14 @@ const MemoryGame = () => {
     >
       {/* Info Section */}
       <Box textAlign="center">
-        <Typography variant="h3" fontWeight="bold" color="#333" mb={2}>
-           Memory Game
-        </Typography>
+
+        <Typography
+  variant="h3"
+  sx={{ fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" } }}
+>
+  Memory Game
+</Typography>
+
 
         <Stack direction="row" justifyContent="center" alignItems="center" spacing={2} mb={2}>
           <Typography variant="body1">Grid Size:</Typography>
@@ -230,49 +252,80 @@ const MemoryGame = () => {
 
       </Box>
 
-      {/* Game Board */}
       <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: `repeat(${gridSize}, ${cardSize}px)`,
-          gap: "10px",
-          justifyContent: "center",
-          alignContent: "center",
-          flexShrink: 0,
-        }}
-      >
+  sx={{
+    display: "grid",
+    gridTemplateColumns: `repeat(${gridSize}, ${cardSize}px)`,
+    gap: "10px",
+    justifyContent: "center",
+    alignContent: "center",
+    maxWidth: "100vw",
+    overflowX: "auto",
+    pb: 2,
+  }}
+>
+
         {cards.map((card) => {
           const flippedOrSolved = isFlipped(card.id);
           const solvedFlag = solved.includes(card.id);
           return (
-            <Paper
-              key={card.id}
-              onClick={() => handleClick(card.id)}
-              elevation={4}
-              sx={{
-                width: `${cardSize}px`,
-                height: `${cardSize}px`,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: 1.2,
-                fontSize: Math.max(18, Math.floor(cardSize * 0.3)),
-                fontWeight: "bold",
-                color: "#fff",
-                userSelect: "none",
-                transformStyle: "preserve-3d",
-                transform: flippedOrSolved ? "rotateY(180deg)" : "rotateY(0deg)",
-                transition: "transform 0.4s ease",
-                background: flippedOrSolved
-                  ? solvedFlag
-                    ? "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)"
-                    : "linear-gradient(135deg, #36d1dc 0%, #5b86e5 100%)"
-                  : "linear-gradient(135deg, #bbb 0%, #999 100%)",
-                cursor: disabled || solvedFlag ? "default" : "pointer",
-              }}
-            >
-              {flippedOrSolved ? card.num : "?"}
-            </Paper>
+<Paper
+  key={card.id}
+  onClick={() => handleClick(card.id)}
+  elevation={4}
+  sx={{
+    width: `${cardSize}px`,
+    height: `${cardSize}px`,
+    position: "relative",
+    borderRadius: 1.2,
+    cursor: disabled || solvedFlag ? "default" : "pointer",
+    transformStyle: "preserve-3d",
+    transform: flippedOrSolved ? "rotateY(-180deg)" : "rotateY(0deg)",
+    transition: "transform 0.4s ease",
+  }}
+>
+  {/* Front Face */}
+  <Box
+    sx={{
+      position: "absolute",
+      inset: 0,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      backfaceVisibility: "hidden",
+      borderRadius: 1.2,
+      fontSize: Math.max(18, Math.floor(cardSize * 0.3)),
+      fontWeight: "bold",
+      color: "#fff",
+      background: "linear-gradient(135deg, #bbb 0%, #999 100%)",
+    }}
+  >
+    ?
+  </Box>
+
+  {/* Back Face */}
+  <Box
+    sx={{
+      position: "absolute",
+      inset: 0,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      backfaceVisibility: "hidden",
+      transform: "rotateY(180deg)", // counter-rotate text
+      borderRadius: 1.2,
+      fontSize: Math.max(18, Math.floor(cardSize * 0.3)),
+      fontWeight: "bold",
+      color: "#fff",
+      background: solvedFlag
+        ? "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)"
+        : "linear-gradient(135deg, #36d1dc 0%, #5b86e5 100%)",
+    }}
+  >
+    {card.num}
+  </Box>
+</Paper>
+
           );
         })}
       </Box>
