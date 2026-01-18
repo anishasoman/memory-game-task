@@ -9,42 +9,55 @@ const Landingpage = () => {
     <Box
       sx={{
         position: "relative",
-        height: "100vh",
+        minHeight: "100vh",
         width: "100%",
         backgroundImage: "url('/images/gameimg.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
         alignItems: "center",
+        justifyContent: "center",
         textAlign: "center",
+        px: { xs: 2, sm: 4 },
         overflow: "hidden",
       }}
     >
- 
+      {/* Overlay */}
+      <Box
+        sx={{
+          position: "absolute",
+          inset: 0,
+          backgroundColor: "rgba(0,0,0,0.45)",
+          zIndex: 1,
+        }}
+      />
 
       {/* Main Content */}
-      <Box sx={{ position: "relative", zIndex: 2, color: "#fff", p: 3 }}>
+      <Box
+        sx={{
+          position: "relative",
+          zIndex: 2,
+          maxWidth: 700,
+          color: "#fff",
+        }}
+      >
         <Typography
-          variant="h2"
           sx={{
-            fontWeight: "bold",
-            textShadow: "2px 2px 8px rgba(0,0,0,0.6)",
+            fontWeight: 800,
+            fontSize: { xs: "2.2rem", sm: "3rem", md: "3.5rem" },
             mb: 2,
+            textShadow: "2px 4px 10px rgba(0,0,0,0.6)",
           }}
         >
           Memory Match Game
         </Typography>
 
         <Typography
-          variant="h6"
           sx={{
-            maxWidth: 600,
-            mx: "auto",
+            fontSize: { xs: "1rem", sm: "1.1rem", md: "1.25rem" },
             mb: 4,
-            color: "#f0f0f0",
+            color: "#eaeaea",
+            px: { xs: 1, sm: 0 },
           }}
         >
           Flip the cards, test your focus, and see how sharp your memory is!
@@ -52,20 +65,19 @@ const Landingpage = () => {
 
         <Button
           variant="contained"
-          size="large"
           onClick={() => navigate("/game")}
           sx={{
-            px: 5,
-            py: 2,
-            fontSize: "1.2rem",
+            px: { xs: 4, sm: 6 },
+            py: { xs: 1.5, sm: 2 },
+            fontSize: { xs: "1rem", sm: "1.2rem" },
             fontWeight: "bold",
-            borderRadius: "30px",
+            borderRadius: "999px",
             background: "linear-gradient(90deg, #2196F3, #0D47A1)",
-            boxShadow: "0 8px 20px rgba(0,0,0,0.3)",
+            boxShadow: "0 10px 25px rgba(0,0,0,0.35)",
             transition: "all 0.3s ease",
             "&:hover": {
               background: "linear-gradient(90deg, #42A5F5, #1565C0)",
-              transform: "scale(1.05)",
+              transform: "scale(1.06)",
             },
           }}
         >
@@ -73,45 +85,48 @@ const Landingpage = () => {
         </Button>
       </Box>
 
-      {/* Floating Cartoon Images */}
+      {/* Floating Cartoon Left */}
       <Box
         component="img"
         src="/images/cartoon2.png"
-        alt="Cartoon 1"
+        alt="cartoon"
         sx={{
           position: "absolute",
-          width: { xs: 100, sm: 220 },
-          top: { xs: 20, sm: 40 },
-          left: { xs: 20, sm: 60 },
-          animation: "floatY 4s ease-in-out infinite",
+          width: { xs: 90, sm: 160, md: 220 },
+          top: { xs: 20, sm: 50 },
+          left: { xs: 10, sm: 40 },
+          animation: "floatUp 4s ease-in-out infinite",
           zIndex: 2,
+          opacity: 0.95,
         }}
       />
 
+      {/* Floating Cartoon Right */}
       <Box
         component="img"
         src="/images/cartoon1.png"
-        alt="Cartoon 2"
+        alt="cartoon"
         sx={{
           position: "absolute",
-          width: {xs: 100, sm: 220  },
+          width: { xs: 90, sm: 160, md: 220 },
           bottom: { xs: 30, sm: 60 },
-          right: { xs: 20, sm: 60 },
-          animation: "floatYReverse 4s ease-in-out infinite",
+          right: { xs: 10, sm: 40 },
+          animation: "floatDown 4s ease-in-out infinite",
           zIndex: 2,
+          opacity: 0.95,
         }}
       />
 
-      {/* Floating Animation Keyframes */}
+      {/* Animations */}
       <style>
         {`
-          @keyframes floatY {
+          @keyframes floatUp {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-14px); }
           }
-          @keyframes floatYReverse {
+          @keyframes floatDown {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(15px); }
+            50% { transform: translateY(14px); }
           }
         `}
       </style>
